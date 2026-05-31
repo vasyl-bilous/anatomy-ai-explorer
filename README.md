@@ -237,6 +237,10 @@ rather than hidden inside a library.
   migrate/seed lifecycle, which is closer to how this would really ship.
 - **CI/CD + Docker.** A multi-stage `Dockerfile`, `docker compose`, and a GitHub
   Actions gate that deploys to Render only after checks pass.
+- **Secret-leak protection at commit time.** A husky pre-commit hook runs
+  **gitleaks** to block any staged secret (API keys, JWTs, AWS creds, a stray
+  `.env` value) before it can reach the repo — `.env*` is git-ignored, and this is
+  the safety net for when someone pastes a credential into tracked code by mistake.
 - **Tests, ADRs, and a visible build history.** Decisions are recorded as ADRs;
   `PLANNING.md` + retrospectives show the plan adapting mid-flight.
 
@@ -267,6 +271,26 @@ cd client && npm run typecheck && npm run lint && npm test && npm run build
 - **CD:** Render is set to **"Wait for CI to pass"**, so a merge to `main` deploys
   only after the gate is green. `main` is the deploy branch; work lands via PR
   (`dev → main`).
+
+### Pre-commit hooks (local guardrails)
+
+Installed via **husky** (`prepare` script). They fail fast on a developer's machine,
+before bad content can be pushed or reach CI:
+
+- **`gitleaks`** — scans staged changes for secrets and **blocks the commit** if it
+  finds one (config: `.gitleaks.toml`). This is the guarantee that a credential — or
+  a leaked `.env` value — never lands in git history. `.env*` files are git-ignored
+  to begin with; gitleaks covers the case where a secret is pasted into tracked code.
+  Bypass is possible only with an explicit `git commit --no-verify`.
+- **`lint-staged`** — runs `eslint --fix` on staged `.ts/.js` and `prettier --write`
+  on staged docs/config, so formatting and lint issues are fixed before they exist in
+  a commit (CI then re-checks the same gates).
+- **`commitlint`** (commit-msg hook) — enforces Conventional Commits, keeping the
+  history readable (and the `fix:` / `feat:` prefixes you see throughout meaningful).
+
+> Hooks need the dev dependencies installed (`npm install` runs `prepare`). `gitleaks`
+> itself is a separate binary (`brew install gitleaks`); if it's absent the hook warns
+> and skips rather than failing the commit — CI is still the backstop.
 
 ---
 
