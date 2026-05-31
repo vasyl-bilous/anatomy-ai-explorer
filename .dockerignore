@@ -2,6 +2,10 @@ node_modules
 client/node_modules
 dist
 client/dist
+# Incremental build cache — must NOT enter the build context, or `nest build`
+# (tsc) treats the project as already-emitted and skips JS output, leaving only
+# .d.ts files in dist/ (then `node dist/main.js` / seed.js fail at runtime).
+**/*.tsbuildinfo
 .git
 .dev-logs
 .notes
