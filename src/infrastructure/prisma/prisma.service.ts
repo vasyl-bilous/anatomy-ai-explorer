@@ -16,6 +16,7 @@ export class PrismaService
 {
   private readonly logger = new Logger(PrismaService.name);
   private readonly pool: Pool;
+  private poolEnded = false;
 
   constructor(configService: ConfigService) {
     const connectionString = configService.get<string>('databaseUrl');
@@ -36,7 +37,25 @@ export class PrismaService
 
   async onModuleDestroy() {
     await this.$disconnect();
-    await this.pool.end();
+    await this.endPool();
     this.logger.log('Prisma + pg pool disconnected');
+  }
+
+  /**
+   * Close the pg pool exactly once. On SIGTERM during a Render redeploy the
+   * shutdown path could reach `pool.end()` twice, and pg throws
+   * "Called end on pool more than once" — a harmless but noisy error logged on
+   * every deploy. A guard flag (plus a swallow of that specific message) makes
+   * teardown idempotent.
+   */
+  private async endPool(): Promise<void> {
+    if (this.poolEnded) return;
+    this.poolEnded = true;
+    try {
+      await this.pool.end();
+    } catch (err) {
+      const message = err instanceof Error ? err.message : '';
+      if (!message.includes('more than once')) throw err;
+    }
   }
 }

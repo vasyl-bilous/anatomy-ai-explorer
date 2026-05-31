@@ -81,6 +81,32 @@ describe('PrismaService', () => {
 
     expect(prismaConnect).toHaveBeenCalledTimes(1);
     expect(prismaDisconnect).toHaveBeenCalledTimes(1);
-    expect(poolEnd).toHaveBeenCalled();
+    expect(poolEnd).toHaveBeenCalledTimes(1);
+  });
+
+  it('closes the pool only once across repeated destroy calls', async () => {
+    const service = new PrismaService(
+      createConfig('postgresql://postgres:postgres@localhost:5432/app'),
+    );
+
+    await service.onModuleInit();
+    await service.onModuleDestroy();
+    await service.onModuleDestroy();
+
+    // Guard makes teardown idempotent — no second pool.end(), no throw.
+    expect(poolEnd).toHaveBeenCalledTimes(1);
+  });
+
+  it('swallows the pg "more than once" error from a double close', async () => {
+    const service = new PrismaService(
+      createConfig('postgresql://postgres:postgres@localhost:5432/app'),
+    );
+    poolEnd.mockRejectedValueOnce(
+      new Error('Called end on pool more than once'),
+    );
+
+    await service.onModuleInit();
+
+    await expect(service.onModuleDestroy()).resolves.toBeUndefined();
   });
 });
