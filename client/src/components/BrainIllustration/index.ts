@@ -1,0 +1,1 @@
+export { BrainIllustration } from './BrainIllustration';

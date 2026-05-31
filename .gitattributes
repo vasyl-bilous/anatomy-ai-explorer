@@ -1,0 +1,33 @@
+# Default: normalize text files to LF in the repo.
+# Working tree retains the platform default on checkout (CRLF on Windows
+# with autocrlf=true, LF on macOS/Linux).
+* text=auto eol=lf
+
+# Force LF for files where mixed endings would break tooling.
+*.ts        text eol=lf
+*.tsx       text eol=lf
+*.js        text eol=lf
+*.cjs       text eol=lf
+*.mjs       text eol=lf
+*.json      text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+*.md        text eol=lf
+*.sql       text eol=lf
+*.sh        text eol=lf
+
+# Husky hooks must execute as scripts on Unix runners.
+.husky/*    text eol=lf
+
+# Treat lockfile as text but never let merge tools touch it.
+package-lock.json text eol=lf merge=binary
+
+# Common binary types — opt out of any normalization.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.ico   binary
+*.pdf   binary
+*.zip   binary

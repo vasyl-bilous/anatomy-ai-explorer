@@ -1,0 +1,53 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Which illustration a region is painted on.
+enum RegionScreen {
+  body
+  brain
+}
+
+// A selectable anatomy region. On the body screen these are diseases (with a
+// category); on the brain screen they are sub-regions of the drilled-in disease,
+// linked back via `parentId`.
+model Region {
+  id        String       @id @default(cuid())
+  name      String
+  category  String? // badge text on body cards; null for brain sub-regions
+  screen    RegionScreen
+  sortOrder Int          @default(0) @map("sort_order") // stable list ordering
+
+  // Self-relation: brain sub-regions point at their parent disease (body).
+  parentId String?  @map("parent_id")
+  parent   Region?  @relation("RegionChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  children Region[] @relation("RegionChildren")
+
+  markers Marker[]
+
+  @@index([screen])
+  @@index([parentId])
+  @@map("regions")
+}
+
+// A clickable dot/anchor painted over an illustration. `xPct`/`yPct` are 0–100,
+// relative to the top-left of the region's screen illustration box.
+model Marker {
+  id      String @id @default(cuid())
+  xPct    Float  @map("x_pct")
+  yPct    Float  @map("y_pct")
+  label   String
+  color   String
+  tooltip String
+
+  regionId String @map("region_id")
+  region   Region @relation(fields: [regionId], references: [id], onDelete: Cascade)
+
+  @@index([regionId])
+  @@map("markers")
+}

@@ -1,0 +1,76 @@
+# compiled output
+/dist
+/node_modules
+/build
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local Postgres data (bind-mount used during dev)
+/db-data
+/postgres-data
+
+# Claude Code AI-development surface is kept local to this checkout.
+.claude/
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# temp directory
+.temp
+.tmp
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# MCP (local servers config + Playwright artifacts)
+.mcp.json
+.playwright-mcp/
+*.png
+
+# Dev server logs (piped for nestjs-dev-logs MCP)
+.dev-logs/
+
+# Private working notes (analysis / strategy — for us only, not for submission)
+.notes/

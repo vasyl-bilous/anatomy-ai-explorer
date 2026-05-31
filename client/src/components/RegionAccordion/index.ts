@@ -1,0 +1,1 @@
+export { RegionAccordion } from './RegionAccordion';

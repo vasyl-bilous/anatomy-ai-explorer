@@ -1,0 +1,17 @@
+.body-illustration {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  aspect-ratio: var(--body-aspect);
+}
+
+.body-illustration__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.4;
+  user-select: none;
+  pointer-events: none;
+}

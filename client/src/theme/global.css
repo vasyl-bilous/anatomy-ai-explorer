@@ -1,0 +1,80 @@
+/**
+ * Global theme + base styles.
+ * Mirrors theme/tokens.ts as :root CSS custom properties so theming is
+ * runtime-switchable. Components consume these via var(--…). Imported once
+ * in main.tsx. NO CSS Modules / Tailwind / CSS-in-JS — global BEM CSS only.
+ */
+
+:root {
+  /* color */
+  --color-bg: #f8f9fa;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f8f7f5;
+  --color-primary: #5973d1;
+  --color-text-primary: #0a0a0a;
+  --color-text-strong: #262626;
+  --color-text-muted: #717182;
+  --color-footer-text: #364153;
+  --color-footer-link: #6a7282;
+  --color-border-subtle: rgba(0, 0, 0, 0.1);
+  --color-divider: rgba(198, 198, 198, 0.5);
+
+  /* marker palette */
+  --color-marker-teal: #2ec5d1;
+  --color-marker-red: #d12429;
+  --color-marker-orange: #ff8000;
+  --color-marker-blue: #5973d1;
+  --color-marker-core: #ff0000;
+  --color-marker-halo: rgba(255, 0, 0, 0.27);
+
+  /* fonts */
+  --font-content: 'Inter', system-ui, sans-serif;
+  --font-chrome: 'SF Pro', system-ui, sans-serif;
+
+  /* radii */
+  --radius-card: 8.75px;
+  --radius-pill: 6.75px;
+
+  /* shadow */
+  --shadow-chrome: 0px 0px 8px 0px rgba(0, 0, 0, 0.08);
+
+  /* aspect ratio of body-outline.png (483 / 1112) */
+  --body-aspect: 0.4344;
+
+  /* aspect ratio of brain.png (995 / 932) */
+  --brain-aspect: 1.0676;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-content);
+  color: var(--color-text-primary);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}

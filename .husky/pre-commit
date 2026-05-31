@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+# Block commits that contain secrets (API keys, JWT tokens, AWS credentials, etc.)
+# Configuration: .gitleaks.toml. Bypass (only when justified): git commit --no-verify
+
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks git --staged --no-banner --redact --config .gitleaks.toml || {
+    echo ""
+    echo "X gitleaks blocked the commit - a secret-like value was found in staged changes."
+    echo "  Inspect the report above, remove the secret (or move it into .env), then re-stage."
+    echo "  If you are sure it is a false positive, allowlist it in .gitleaks.toml."
+    exit 1
+  }
+else
+  echo "! gitleaks not installed - skipping secret scan."
+  echo "  Install: 'brew install gitleaks' (macOS), 'apt-get install gitleaks' (Linux),"
+  echo "  'choco install gitleaks' (Windows), or download from https://github.com/gitleaks/gitleaks/releases"
+fi
+
+npm exec lint-staged

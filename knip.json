@@ -1,0 +1,23 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": [
+    "src/main.ts",
+    "test/**/*.{spec,e2e-spec}.ts",
+    "src/**/*.spec.ts",
+    "src/shared/contracts/anatomy.contract.ts"
+  ],
+  "project": ["src/**/*.ts", "test/**/*.ts"],
+  "ignoreDependencies": [
+    "lint-staged",
+    "supertest",
+    "@types/supertest",
+    "@nestjs/testing"
+  ],
+  "ignoreExportsUsedInFile": true,
+  "ignore": [
+    "src/common/swagger/api-error-response.decorator.ts",
+    "client/**",
+    "src/common/dto/paginated-response.dto.ts",
+    "src/common/dto/pagination-query.dto.ts"
+  ]
+}

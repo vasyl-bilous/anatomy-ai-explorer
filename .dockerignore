@@ -1,0 +1,13 @@
+node_modules
+client/node_modules
+dist
+client/dist
+.git
+.dev-logs
+.notes
+.playwright-mcp
+coverage
+*.log
+.env
+.env.*
+!.env.example

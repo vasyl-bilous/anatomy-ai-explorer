@@ -1,0 +1,43 @@
+.disease-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  text-align: left;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-card);
+  color: var(--color-text-primary);
+  transition:
+    border-color 0.12s ease,
+    box-shadow 0.12s ease,
+    background 0.12s ease;
+}
+
+.disease-card:hover {
+  border-color: var(--color-primary);
+}
+
+.disease-card--selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary) inset;
+  background: var(--color-surface-alt);
+}
+
+.disease-card__title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.disease-card__badge {
+  flex-shrink: 0;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border-subtle);
+  font-size: 12px;
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}

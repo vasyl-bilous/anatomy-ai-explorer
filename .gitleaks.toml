@@ -1,0 +1,46 @@
+# gitleaks configuration — nestjs-template
+#
+# Extends the upstream default ruleset (do not redefine those rules here).
+# Add only project-specific allowlist entries below.
+#
+# Manual scan (full repo, untracked + tracked):
+#   gitleaks detect --source . --no-banner --redact
+#
+# Scan only staged changes (what the pre-commit hook does):
+#   gitleaks git --staged --no-banner --redact --config .gitleaks.toml
+#
+# Bypass (only when justified, with a note in the PR description):
+#   git commit --no-verify
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "nestjs-template project allowlist"
+paths = [
+  # Seed scripts use documented demo passwords (not production secrets)
+  '''src/infrastructure/prisma/seed/.*\.seed\.ts$''',
+  '''src/infrastructure/prisma/seed/seed\.ts$''',
+
+  # Documented examples are placeholders, not real secrets
+  '''\.env\.example$''',
+  '''\.env\.secure\.example$''',
+
+  # Test fixtures and integration helpers
+  '''test/fixtures/.*''',
+  '''test/integration/helpers/.*''',
+
+  # Lock files contain integrity hashes that gitleaks sometimes mistakes for secrets
+  '''package-lock\.json$''',
+
+  # OpenAPI snapshot includes example JWTs in @ApiProperty(example: ...)
+  '''ops/openapi/openapi\.json$''',
+]
+
+regexes = [
+  # JWT examples in Swagger (@ApiProperty(example: 'eyJhbG...')) — non-secret demo strings
+  '''eyJ[A-Za-z0-9_-]*\.eyJ[A-Za-z0-9_-]*\.[A-Za-z0-9_-]+''',
+]
+
+# Per-line override is also available in code with the comment:
+#   // gitleaks:allow

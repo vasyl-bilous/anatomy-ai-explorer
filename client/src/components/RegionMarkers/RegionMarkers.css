@@ -1,0 +1,60 @@
+.region-markers {
+  position: absolute;
+  inset: 0;
+  /* The overlay spans the whole box but must not swallow background clicks —
+     only the marker buttons are interactive (re-enabled below). This lets a
+     click on the empty illustration reach the box and clear the selection. */
+  pointer-events: none;
+}
+
+.region-markers__marker {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  pointer-events: auto;
+  border-radius: 50%;
+  background: var(--marker-color, var(--color-marker-core));
+  box-shadow: 0 0 0 6px var(--color-marker-halo);
+  transform: translate(-50%, -50%);
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+}
+
+.region-markers__marker:hover {
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.region-markers__marker--selected {
+  box-shadow:
+    0 0 0 6px var(--color-marker-halo),
+    0 0 0 9px var(--color-primary);
+  transform: translate(-50%, -50%) scale(1.25);
+}
+
+.region-markers__tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  min-width: 120px;
+  max-width: 200px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: var(--color-text-strong);
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.35;
+  text-align: center;
+  pointer-events: none;
+  white-space: normal;
+}
+
+.region-markers__tooltip-title {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 2px;
+}

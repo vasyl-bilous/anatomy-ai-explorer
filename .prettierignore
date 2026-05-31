@@ -1,0 +1,8 @@
+dist
+coverage
+node_modules
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+prisma/migrations
+src/generated
