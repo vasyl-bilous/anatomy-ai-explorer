@@ -3,6 +3,10 @@
 /node_modules
 /build
 
+# TypeScript incremental build cache (must not be committed — a stale cache makes
+# `nest build`/`tsc` skip JS emission, leaving only .d.ts; see .dockerignore)
+*.tsbuildinfo
+
 # Logs
 logs
 *.log
