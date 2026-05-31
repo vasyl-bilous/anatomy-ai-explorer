@@ -71,10 +71,15 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 # MCP (local servers config + Playwright artifacts)
 .mcp.json
 .playwright-mcp/
-*.png
+# Stray Playwright screenshots land in the repo root — ignore those, but NOT the
+# real app assets under client/public (anatomy PNGs must ship in the build).
+/*.png
 
 # Dev server logs (piped for nestjs-dev-logs MCP)
 .dev-logs/
 
 # Private working notes (analysis / strategy — for us only, not for submission)
 .notes/
+
+# Scratch/reference images kept locally, not part of the app
+/pictures/
