@@ -113,7 +113,8 @@ request IDs flow middleware → error envelope → logs.
 - `src/infrastructure/` — adapters to external systems:
   - `prisma/` — `@Global() PrismaService` (extends `PrismaClient`, `@prisma/adapter-pg`
     - `pg.Pool`), `TransactionManager`, empty `seed/seed.ts`.
-  - `health/` — `@nestjs/terminus` Prisma indicator at `/api/health` (`@SkipResponseTransform()`).
+  - `health/` — `@nestjs/terminus` probes at `/api/health/live` + `/api/health/ready`
+    (the latter checks Prisma/DB), version-neutral, `@SkipResponseTransform()`.
 - `src/app.module.ts` — registers `ConfigModule` (global, Zod-validated),
   `PrismaModule`, `ErrorHandlerModule`, `HealthModule`.
 
@@ -166,7 +167,7 @@ anatomy-ai-explorer/
 │   │   └── logger/                  #   logger setup
 │   ├── infrastructure/              # Adapters to external systems
 │   │   ├── prisma/                  #   @Global PrismaService (PrismaClient + @prisma/adapter-pg + pg.Pool), TransactionManager, seed/
-│   │   └── health/                  #   @nestjs/terminus Prisma indicator at /api/health (version-neutral)
+│   │   └── health/                  #   @nestjs/terminus probes /api/health/live + /ready (DB), version-neutral
 │   └── modules/                     # ── Feature modules (TO BUILD) ──
 │       ├── regions/                 #   read-only regions+markers API (repo/service/controller/dto/res) — M3
 │       └── analysis/                #   async in-memory AI-analysis job — M5 (analysis.constants.ts exists)

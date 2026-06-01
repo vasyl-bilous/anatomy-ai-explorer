@@ -28,7 +28,7 @@ function serveStaticImports(): DynamicModule[] {
     ServeStaticModule.forRoot({
       rootPath: clientDist,
       // path-to-regexp v8 (Nest 11) needs a named wildcard, not the old `/api*`.
-      // This keeps every /api/... route (REST, /api/docs, /api/health) with Nest.
+      // This keeps every /api/... route (REST, /api/docs, /api/health/*) with Nest.
       exclude: ['/api/{*splat}'],
     }),
   ];

@@ -121,7 +121,7 @@ anatomy-ai-explorer/
 │   │   └── logger/
 │   ├── infrastructure/               #   adapters to the outside world
 │   │   ├── prisma/                   #     @Global PrismaService (PrismaClient + pg adapter) + seed
-│   │   └── health/                   #     Terminus DB health check at /api/health
+│   │   └── health/                   #     Terminus probes: /api/health/live + /api/health/ready (DB)
 │   └── modules/                      #   ── feature modules: controller → service → repository ──
 │       ├── regions/                  #     read-only regions/markers from Postgres (GET list + by id)
 │       └── analysis/                 #     async AI job: in-memory store + setTimeout + mock result
