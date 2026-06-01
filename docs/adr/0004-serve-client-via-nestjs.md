@@ -35,7 +35,7 @@ or CORS between origins. Options:
 - `exclude: ['/api/{*splat}']` — note the **path-to-regexp v8** named-wildcard
   syntax (Nest 11 / serve-static 5). The old `/api*` throws
   `Missing parameter name`. This keeps REST (`/api/v1/...`), Swagger (`/api/docs`),
-  and health (`/api/health`) with Nest; everything else falls through to the SPA
+  and health (`/api/health/*`) with Nest; everything else falls through to the SPA
   (so client-side deep links like `/region/:id` serve `index.html`).
 - `start:prod` is `node dist/main.js` (nest build emits a flat `dist/`, not
   `dist/src/`); `rootPath` is `join(__dirname, '..', 'client', 'dist')` from the

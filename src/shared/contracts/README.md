@@ -7,8 +7,8 @@ behind them.
 ## Routes
 
 All feature endpoints are under **`/api/v1`** (global prefix `api` + URI
-versioning, default `v1` — `src/core/bootstrap/setup-app.ts`). Health is
-version-neutral at `/api/health`. Swagger at `/api/docs`.
+versioning, default `v1` — `src/core/bootstrap/setup-app.ts`). Health probes are
+version-neutral at `/api/health/live` and `/api/health/ready`. Swagger at `/api/docs`.
 
 | Method | Path                   | Returns (inside the envelope)               |
 | ------ | ---------------------- | ------------------------------------------- |
